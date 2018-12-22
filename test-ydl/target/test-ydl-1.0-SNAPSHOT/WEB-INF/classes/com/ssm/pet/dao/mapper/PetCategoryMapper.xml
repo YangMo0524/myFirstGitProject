@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper        
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<!--此处填dao层接口-->
+<mapper namespace="com.ssm.pet.dao.PetCategoryDAO">
+         <!--<![CDATA[在这里写增删改查的语句]]>-->
+         <!--<![CDATA[你的注释]]>-->
+    <resultMap id="map" type="PetTO">
+        <id column="pet_id" property="petId"/>
+        <result column="pet_name" property="petName"/>
+        <result column="pet_discription" property="petDiscription"/>
+        <result column="pet_img" property="petImg"/>
+        <result column="pet_category_id" property="petCategoryId"/>
+    </resultMap>
+    <sql id="selectPetCategory">
+        SELECT pet_id,pet_name,pet_discription,pet_img,pet_category_id
+        FROM pet
+    </sql>
+    <select id="getPetCategory" parameterType="Integer" resultMap="map">
+        <include refid="selectPetCategory"></include>
+        WHERE pet_category_id=#{petCategoryId}
+    </select>
+    <select id="getPetInfo" parameterType="Integer" resultType="PetInfoTO">
+        SELECT pet_info_id petInfoId,pet_info_content petInfoContent,feeding_grade feedingGrade,alias,origin,pet_shape petShape,pet_id petId
+        FROM pet_info
+        WHERE pet_id=#{petId}
+    </select>
+    <select id="getPetDescription" resultType="PetTO">
+        SELECT pet_name petName,pet_discription petDiscription
+        FROM pet
+        WHERE pet_id=#{petId}
+    </select>
+    <select id="getPetCategories" resultType="PetTO">
+        SELECT pet_id petId,pet_name petName,pet_discription petDiscription,pet_img petImg,pet_category_id petCategoryId
+        FROM pet
+    </select>
+</mapper>

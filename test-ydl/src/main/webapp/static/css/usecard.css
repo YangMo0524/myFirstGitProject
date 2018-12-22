@@ -1,0 +1,71 @@
+/*�һ�*/
+.duihuan{margin:0 auto;width:350px;padding-top:5px;overflow:hidden}
+.dh_ka,.dh_no{width:350px;padding-bottom:10px;overflow:hidden;}
+.dh_ka{border-bottom:1px solid #ccc;}
+.dh_daojv{float:left;width:110px;padding-left:10px;}
+.dh_daojv img{width:100px;height:100px;border:1px solid #ccc;}
+.dh_xinxi{float:left;width:230px;color:#666}
+.dh_xinxi ul li{height:25px;line-height:25px;overflow:hidden;}
+.dh_bt{font-size:14px;color:#369;}
+.dh_xinxi span{font-family:Arial, Helvetica, sans-serif;color:#f13e38;}
+.dh_xinxi input{width:50px;}
+.dh_queren{width:350px;height:50px;color:#333;overflow:hidden}
+.dh_queren ul li{float:left;}
+.dh_queren span{font-family:Arial, Helvetica, sans-serif;font-weight:bold;color:#e6312d}
+.queren_bth{width:65px;height:35px;padding-top:15px;padding-left:10px;padding-right:10px;}
+.queren_bth img{width:65px;height:21px;}
+.qr_wenzi{color:#333;height:50px;line-height:50px;padding-left:10px;}
+.qr_wenzi input{_margin-top:15px;}
+.daojvsm{margin:0 auto;width:330px;padding:10px;}
+.daojvsm ul li{color:#010101;line-height:22px;}
+.yuanyin{width:220px;height:25px;background:#dedede;padding-left:10px;color:#000;}
+/*ʹ��*/
+#usecard{width:350px;margin:0 auto;overflow:hidden;}
+.usecard_top{width:350px;overflow:hidden;padding:5px 0;border-bottom:1px solid #ccc;}
+.usecard_l{width:80px;height:70px;float:left;}
+.usecard_l img{width:60px;height:60px;overflow:hidden;padding:3px;border:1px solid #ccc}
+.usecard_r{float:left;width:260px;overflow:hidden}
+.usecard_r .cardtit{font-size:14px;color:#369}
+.usecard_r p{line-height:22px;color:#666;height:auto;margin:0;padding:0}
+.usecard_btm{width:350px;background:#f2f2f2;height:40px;overflow:hidden;}
+.usecard_btm_l{float:left;width:280px;color:#f60;padding-left:10px; padding-top:10px}
+.usecard_btm_r{float:right;width:50px;}
+.usecard_btm_btn{border:1px solid #235994;background:#2868b8;width:45px;height:21px;color:#fff;margin-top:10px}
+#usecard_photo{width:350px;overflow:hidden;padding:5px 0;border-bottom:1px solid #ccc;}
+#usecard_photo .cardtx{ width:130px;height:130px; background:#dedede;float:left;margin:5px;display:inline}
+#usecard_photo .cardtx img{ width:100px;height:100px;padding-top:5px;}
+#usecard_photo .cardtn{ width:65px;height:65px;overflow:hidden; float:left;margin:3px 2px;display:inline}
+#usecard_photo .cardtn img{ width:61px;height:61px;overflow:hidden}
+.photo_card{width:72px;height:110px;position:absolute;top:-10px;right:-20px;display:block;cursor:pointer;z-index:2;text-indent:-9999px; overflow:hidden}
+.photo_card0{display:none}
+.photo_card{background-repeat:no-repeat;_background:none;}
+/*�һ�*/
+.duihuan{margin:0 auto;width:350px;padding-top:5px;overflow:hidden}
+.dh_ka,.dh_no{width:350px;padding-bottom:10px;overflow:hidden;}
+.dh_ka{border-bottom:1px solid #ccc;}
+.dh_daojv{float:left;width:110px;padding-left:10px;}
+.dh_daojv img{width:100px;height:100px;border:1px solid #ccc;}
+.dh_xinxi{float:left;width:230px;color:#666}
+.dh_xinxi ul li{height:25px;line-height:25px;overflow:hidden;}
+.dh_bt{font-size:14px;color:#369;}
+.dh_xinxi span{font-family:Arial, Helvetica, sans-serif;color:#f13e38;}
+.dh_xinxi input{width:50px;}
+.dh_queren{width:350px;height:50px;color:#333;overflow:hidden}
+.dh_queren ul li{float:left;}
+.dh_queren span{font-family:Arial, Helvetica, sans-serif;font-weight:bold;color:#e6312d}
+.queren_bth{width:65px;height:35px;padding-top:15px;padding-left:10px;padding-right:10px;}
+.queren_bth img{width:65px;height:21px;}
+.qr_wenzi{color:#333;height:50px;line-height:50px;padding-left:10px;}
+.qr_wenzi input{_margin-top:15px;}
+.daojvsm{margin:0 auto;width:330px;padding:10px;}
+.daojvsm ul li{color:#010101;line-height:22px;}
+.yuanyin{width:220px;height:25px;background:#dedede;padding-left:10px;color:#000;}
+.add_h{height:auto;width:360px;overflow:hidden;margin-top:5px; font-size:12px}
+/*---վ����---*/
+.add_h{height:auto;width:320px;overflow:hidden;}
+.mess_name_input{width:160px;height:20px;line-height:20px;padding-left:5px;border:1px solid #ccc;}
+.mess_title_input{width:160px;height:20px;line-height:20px;padding-left:5px;border:1px solid #ccc;}
+.mess_l{width:45px;text-align:right;padding-right:5px;float:left;padding-top:5px;}
+.mess_r{width:270px;float:left}
+.mess_save{width:280px;padding:10px 0 0 40px;}
+.addtextarea{width:265px;height:60px;border:1px solid #ccc;line-height:20px;background:url(../images/ic_k.gif) no-repeat -690px -155px;overflow:hidden;font-size:12px;color:#666}

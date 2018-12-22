@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.pet.dao.ArtcleDAO">
+
+    <resultMap id="ArtcleMap" type="ArtcleTO">
+        <id property="artcleId" column="artcle_id"/>
+        <result property="artcleReleaseDate" column="artcle_release_date"/>
+        <result property="artcleTitle" column="artcle_title"/>
+        <result property="artcleContent" column="artcle_content"/>
+        <result property="artcleSource" column="artcle_source"/>
+        <result property="artcleEditor" column="artcle_editor"/>
+        <result property="artcleReadNum" column="artcle_readNum"/>
+        <result property="cover" column="cover"/>
+        <association property="label" javaType="com.ssm.pet.pojo.LabelTO">
+            <id property="labelId" column="label_id"/>
+            <result property="labelName" column="label_name"/>
+        </association>
+    </resultMap>
+
+    <sql id="getArtcle">
+        SELECT ac.artcle_id,ac.artcle_release_date,ac.artcle_title,ac.artcle_content,
+            ac.artcle_source,ac.artcle_editor,ac.artcle_readNum,ac.label_id,
+            ac.review_status,l.label_name,l.label_id,ac.cover
+        FROM artcle ac
+        INNER JOIN label l ON l.label_id = ac.label_id
+    </sql>
+    <select id="getArtcleByDate" parameterType="Integer" resultMap="ArtcleMap">
+      <include refid="getArtcle"/>
+        where ac.review_status= '1'
+          and ac.label_id = #{labelId}
+        ORDER BY ac.artcle_release_date DESC
+    </select>
+
+    <select id="getArtcleByClick" parameterType="Integer" resultMap="ArtcleMap">
+        <include refid="getArtcle"/>
+        WHERE ac.label_id = #{labelid} AND ac.review_status= '1'
+        ORDER BY ac.artcle_readNum DESC
+    </select>
+
+    <select id="getAllArtcleByClick" resultMap="ArtcleMap">
+        <include refid="getArtcle"/>
+        WHERE ac.review_status= '1'
+        ORDER BY ac.artcle_readNum DESC
+    </select>
+
+    <select id="getArtcleById" resultMap="ArtcleMap">
+        <include refid="getArtcle"/>
+        where ac.artcle_id=#{articleId}
+    </select>
+    <update id="updateReadNum" parameterType="int">
+        UPDATE artcle ac SET artcle_readNum = artcle_readNum+1
+        WHERE ac.artcle_id=#{articleId}
+    </update>
+
+    <select id="ByDateForNextArt" parameterType="Integer" resultMap="ArtcleMap">
+        <include refid="getArtcle"/>
+        WHERE ac.label_id = #{labelid} AND ac.review_status= '1'
+        ORDER BY ac.artcle_release_date DESC
+    </select>
+
+    <select id="getPreArt" parameterType="map" resultMap="ArtcleMap">
+
+    </select>
+
+    <insert id="insertOneArtcle" parameterType="ArtcleTO" useGeneratedKeys="true" keyProperty="artcleId">
+        INSERT INTO artcle (artcle_release_date,artcle_title,artcle_content,artcle_source,artcle_editor,label_id,cover)
+        VALUES (now(),#{artcleTitle},#{artcleContent},#{artcleSource},#{artcleEditor},#{label.labelId},#{cover})
+    </insert>
+
+    <insert id="insertOneArtcleUser" parameterType="map">
+        INSERT INTO user_artcle VALUES (#{userId},#{artcleId})
+    </insert>
+
+</mapper>

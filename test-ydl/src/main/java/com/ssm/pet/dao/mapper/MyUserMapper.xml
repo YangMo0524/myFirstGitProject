@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.pet.dao.MyUserDAO">
+    <insert id="addImg" parameterType="string">
+        INSERT INTO user_pet_img(pet_img_url) VALUES (#{petImgUrl})
+    </insert>
+    <insert id="addUserImg" parameterType="map">
+        INSERT INTO user_img(user_id,pet_img_id) VALUES (#{uid},#{pmid})
+    </insert>
+    <select id="getImgIdByUrl" parameterType="string" resultType="Integer">
+        SELECT pet_img_id
+        FROM user_pet_img
+        WHERE pet_img_url=#{petImgUrl}
+    </select>
+    <select id="getAllMyImg" resultType="string" parameterType="int">
+        SELECT upi.pet_img_url
+        FROM user_pet_img upi
+            INNER JOIN user_img ui ON upi.pet_img_id = ui.pet_img_id
+        WHERE user_id=#{userId}
+    </select>
+    <select id="getMyImgCount" resultType="Integer">
+        SELECT COUNT(pet_img_url) FROM user_pet_img
+    </select>
+    <update id="updateUserImg" parameterType="UserInfoTO">
+        update user
+        set user_icon= #{userImg}
+        where user_id=#{userId}
+    </update>
+    <select id="getUserImgByUid" parameterType="Integer" resultType="string">
+        SELECT user_icon
+        FROM user
+        WHERE user_id=#{userId}
+    </select>
+    <update id="updateUserPassword" parameterType="UserTO">
+        UPDATE user
+        SET user_password=#{userPassword}
+        WHERE user_id=#{userId}
+    </update>
+    <select id="getPasswordByUid" parameterType="Integer" resultType="string">
+        SELECT user_password
+        from user
+        WHERE user_id=#{uid}
+    </select>
+
+    <resultMap id="ArtcleMap" type="ArtcleTO">
+        <id property="artcleId" column="artcle_id"/>
+        <result property="artcleReleaseDate" column="artcle_release_date"/>
+        <result property="artcleTitle" column="artcle_title"/>
+        <result property="artcleSource" column="artcle_source"/>
+        <result property="artcleEditor" column="artcle_editor"/>
+        <result property="artcleReadNum" column="artcle_readNum"/>
+        <result property="artcleContent" column="artcle_content"/>
+        <result property="cover" column="cover"/>
+        <result property="review" column="review_status"/>
+        <association property="label" javaType="com.ssm.pet.pojo.LabelTO">
+            <id property="labelId" column="label_id"/>
+            <result property="labelName" column="label_name"/>
+        </association>
+    </resultMap>
+
+    <select id="getMyArtcle" parameterType="map" resultMap="ArtcleMap">
+        SELECT a.`artcle_release_date`,a.`artcle_title`,a.`artcle_readNum`,a.`cover`,a.`artcle_id`,
+            a.`review_status`,a.`artcle_content`
+        FROM artcle a
+            INNER JOIN user_artcle ON a.`artcle_id`=user_artcle.`artcle_id` AND user_id=#{uid}
+        <where>
+
+            <if test="artcleTitle!=null and artcleTitle!=''">AND a.artcle_title LIKE concat('%',#{artcle.artcleTitle},'%')</if>
+            <if test="review!=null">AND a.review_status = #{artcle.review}</if>
+            <if test="artcleSource!=null and artcleSource!=''">AND a.artcle_source LIKE  concat ('%',#{artcle.artcleSource},'%')</if>
+        </where>
+    </select>
+
+    <update id="updateMyArtcle" parameterType="ArtcleTO" >
+        UPDATE artcle
+        <set>
+            <if test="artcleTitle!=null and artcleTitle!=''">artcle_title=#{artcleTitle},</if>
+            <if test="artcleContent!=null and artcleContent!=''">artcle_content=#{artcleContent}</if>
+        </set>
+        WHERE artcle_id=#{artcleId}
+    </update>
+    <delete id="delMyArtcle" parameterType="Integer">
+        DELETE FROM artcle
+        WHERE artcle.artcle_id=#{id}
+    </delete>
+    <delete id="delUserArtcle" parameterType="Integer">
+        DELETE FROM user_artcle
+        WHERE user_artcle.artcle_id=#{id}
+    </delete>
+
+    <resultMap id="communicateMap" type="PetCommunicateTO">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="info" column="info"/>
+        <result property="title" column="title"/>
+        <result column="reply_count" property="replyCount"/>
+        <result column="see_count" property="seeCount"/>
+        <result column="create_date" property="createDate"/>
+        <result column="last_date" property="lastDate"/>
+        <result column="image" property="image"/>
+    </resultMap>
+
+    <select id="getMyComm" parameterType="Integer" resultMap="communicateMap">
+        SELECT c.`title`,c.`create_date`,c.`last_date`,c.`reply_count`,c.`see_count`,c.`id`,c.`info`
+        FROM communicate c
+       WHERE c.`user_id`=#{uid}
+    </select>
+    <update id="updateMyComm" parameterType="PetCommunicateTO" >
+        UPDATE communicate
+        <set>
+            <if test="title!=null and title!=''">title=#{title},</if>
+            <if test="info!=null and info!=''">info=#{info}</if>
+        </set>
+        WHERE communicate.id=#{id}
+    </update>
+    <delete id="delMyComm" parameterType="Integer">
+        DELETE FROM communicate
+        WHERE communicate.id=#{id}
+    </delete>
+    <delete id="delUserComm" parameterType="Integer">
+        DELETE FROM user_comm
+        WHERE user_comm.comm_id=#{id}
+    </delete>
+</mapper>

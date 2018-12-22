@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.pet.dao.PetCommunicateDAO">
+    <resultMap id="communicateMap" type="PetCommunicateTO">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="info" column="info"></result>
+        <result property="title" column="title"></result>
+        <result column="reply_count" property="replyCount"></result>
+        <result column="see_count" property="seeCount"></result>
+        <result column="create_date" property="createDate"></result>
+        <result column="last_date" property="lastDate"></result>
+        <result column="image" property="image"></result>
+    </resultMap>
+    <select id="getPetCommunicateList" resultMap="communicateMap" parameterType="string">
+        SELECT id,image,user_id,info,title,reply_count,see_count,create_date,last_date
+        FROM communicate
+        <where>
+            <if test="info!=null and info!=''">and info LIKE concat('%',#{info},'%')</if>
+            <if test="title!=null and title!=''">and title LIKE  concat('%',#{title},'%')</if>
+        </where>
+    </select>
+    <select id="getCount" resultType="int">
+        select count(id) from communicate
+    </select>
+    <select id="getPetCommunicate" resultMap="communicateMap" >
+        SELECT id,image,user_id,info,title,reply_count,see_count,create_date,last_date
+        FROM communicate WHERE create_date=#{createDate};
+    </select>
+    <select id="getImages" resultMap="communicateMap">
+        SELECT image FROM communicate
+    </select>
+    <select id="getInfo" parameterType="int" resultType="PetCommunicateTO">
+        SELECT id,image,user_id userId,info,title,reply_count replyCount,see_count seeCount,create_date createDate,last_date lastDate
+        FROM communicate WHERE id=#{id};
+    </select>
+    <select id="getReply" parameterType="int" resultMap="ReplyMap">
+        SELECT id,reply,reply_id,user_id FROM reply WHERE reply_id=#{id}
+    </select>
+    <resultMap id="ReplyMap" type="ReplyTO">
+        <id property="id" column="id"></id>
+        <result property="replyId" column="reply_id"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="reply" column="reply"></result>
+    </resultMap>
+    <insert id="addReply" parameterType="ReplyTO">
+        INSERT INTO reply(reply,reply_id,user_id) VALUES (#{reply},#{replyId},1)
+    </insert>
+    <update id="updateReply" parameterType="int">
+        UPDATE communicate SET reply_count=reply_count+1,see_count=see_count+1 WHERE id=#{id}
+    </update>
+
+    <insert id="addPetCommunicate" parameterType="PetCommunicateTO">
+        INSERT INTO communicate(title,info,create_date,last_date,user_id,reply_count,see_count)
+        VALUES (#{title},#{info},now(),now(),1,0,1)
+    </insert>
+    <select id="getHot" resultMap="communicateMap" >
+        SELECT title FROM communicate ORDER BY see_count DESC limit 0,10
+    </select>
+</mapper>

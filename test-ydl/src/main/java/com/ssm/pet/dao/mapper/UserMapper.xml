@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.pet.dao.UserDAO">
+
+    <insert id="insertOneUser" parameterType="UserTO" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO USER (user_name,user_password,user_icon)
+        VALUES (#{userName},#{userPassword},#{userIcon})
+    </insert>
+
+    <select id="selectUserByUserName" parameterType="UserTO" resultType="UserTO">
+        SELECT user_id userId, user_name userName,user_password userPassword,user_icon userIcon FROM USER
+        WHERE user_name=#{userName}
+    </select>
+</mapper>
